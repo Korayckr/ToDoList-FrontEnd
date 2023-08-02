@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">To-Do List</h4>
+                </div>
+                <div class="card-body">
+                    <!-- To-Do List Formu -->
+                    <form id="todoForm">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <input [(ngModel)]="taskRequest.UserId" [ngModelOptions]="{standalone: true}"
+                                    type="text" class="form-control" placeholder="User Id" id="taskNameInput" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <input [(ngModel)]="taskRequest.taskName" [ngModelOptions]="{standalone: true}"
+                                    type="text" class="form-control" placeholder="ToDo Name" id="taskNameInput"
+                                    required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <input [(ngModel)]="taskRequest.taskDesc" [ngModelOptions]="{standalone: true}"
+                                    type="text" class="form-control" placeholder="ToDo Description" id="taskDescInput">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <input [(ngModel)]="taskRequest.time" [ngModelOptions]="{standalone: true}"
+                                    type="number" class="form-control" placeholder="ToDo Time (in minutes)"
+                                    id="taskTimeInput">
+                            </div>
+
+                            <div class="col-md-1 mb-3">
+                                <button class="btn btn-primary" type="submit"
+                                    (click)="onCreate(taskRequest)">Ekle</button>
+                            </div>
+                        </div>
+                    </form>
+
+                   
+
+                    <!-- To-Do List Tablosu -->
+                    <table class="table table-bordered table-striped mt-3">
+                        <thead>
+                          <tr>
+                            <th scope="col">ToDo Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let task of tasks" >
+                            <td>{{ task.taskName }}</td>
+                            <td>{{ task.taskDesc }}</td>
+                            <td>{{ task.time }}</td>
+                            <td [ngClass]="{'completed-task': !task.status}">
+                              <ng-container *ngIf="task.status === 0; else taskBlock">
+                                Not Completed
+                              </ng-container>
+                              <ng-template #taskBlock>
+                                Completed
+                              </ng-template>
+                            </td>
+                            <td >
+                              <div class="button-group">
+                                <button pButton pRipple icon="pi pi-lock" class="p-button-rounded p-button-help mr-2"
+                                  (click)="updateToFalse(task.id)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                  (click)="deleteTask(task.id)"></button>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      
+                    <!-- ... (remaining HTML code) ... -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
